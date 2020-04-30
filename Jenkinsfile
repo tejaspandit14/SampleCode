@@ -8,7 +8,7 @@ pipeline{
         stage('Checkout'){
             agent {label 'win_slave'}
             steps{
-                git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
+                git 'https://github.com/tejaspandit14/SampleCode.git'
             }
         }
         stage('Compile'){
