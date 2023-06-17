@@ -3,22 +3,19 @@ pipeline{
         jdk 'myjava'
         maven 'mymaven'
     }
-    agent none
+    agent any
     stages{
         stage('Checkout'){
-            agent {label 'win_slave'}
             steps{
                 git 'https://github.com/tejaspandit14/SampleCode.git'
             }
         }
         stage('Compile'){
-            agent {label 'win_slave'}
             steps{
                 bat 'mvn compile'
             }
         }
         stage('CodeReview'){
-            agent any
             steps{
                 sh 'mvn pmd:pmd'
             }
@@ -29,13 +26,11 @@ pipeline{
             }
         }
         stage('UnitTest'){
-            agent any
             steps{
                 sh 'mvn test'
             }
         }
         stage('MetricCheck'){
-            agent any
             steps{
                 sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
             }
@@ -46,7 +41,6 @@ pipeline{
             }
         }
         stage('Package'){
-            agent any
             steps{
                 sh 'mvn package'
             }
