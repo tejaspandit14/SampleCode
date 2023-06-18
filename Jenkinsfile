@@ -12,7 +12,7 @@ pipeline{
         }
         stage('Compile'){
             steps{
-                bat 'mvn compile'
+                sh 'mvn compile'
             }
         }
         stage('CodeReview'){
