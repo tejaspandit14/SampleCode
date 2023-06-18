@@ -19,6 +19,11 @@ pipeline{
             steps{
                 sh 'mvn pmd:pmd'
             }
+            // post{
+            //     always{
+            //         pmd pattern: 'target/pmd.xml'
+            //     }
+            // }
         }
         stage('UnitTest'){
             steps{
@@ -29,11 +34,11 @@ pipeline{
             steps{
                 sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
             }
-            post{
-                always{
-                    cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
-                }
-            }
+            // post{
+            //     always{
+            //         cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+            //     }
+            // }
         }
         stage('Package'){
             steps{
