@@ -23,7 +23,7 @@ pipeline{
             //     always{
             //         pmd pattern: 'target/pmd.xml'
             //     }
-            }
+            // }
         }
         stage('UnitTest'){
             steps{
