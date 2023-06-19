@@ -7,6 +7,11 @@ pipeline{
     agent {
                 label 'docker'
             }
+
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
+
     stages{
         stage('Checkout'){
             steps{
@@ -48,16 +53,32 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage('Docker build'){
+        stage('Docker build Image'){
             steps{
                 sh """
                 rm -rf jenkins-docker
                 mkdir jenkins-docker
                 cp /home/admin/agent/workspace/devops/target/addressbook.war jenkins-docker/
                 docker build -t deploy:$BUILD_NUMBER .
-                docker run -itd -P deploy:$BUILD_NUMBER
+                #docker run -itd -P deploy:$BUILD_NUMBER
+                docker tag deploy:$BUILD_NUMBER tejaspandit/addressbookbuild:$BUILD_NUMBER
+                docker rmi deploy:$BUILD_NUMBER
                 """
             }
-        }        
+        }
+        stage('Docker Push image') {
+            steps {
+			    sh """
+                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                docker push tejaspandit/addressbookbuild:$BUILD_NUMBER
+                docker rmi tejaspandit/addressbookbuild:$BUILD_NUMBER
+                """
+			}
+        }         
     }
+    post {
+    always {
+      sh 'docker logout'
+    }
+  }
 }
