@@ -3,7 +3,10 @@ pipeline{
         jdk 'myjava'
         maven 'mymaven'
     }
-    agent any
+    // agent any
+    agents {
+                label 'docker'
+            }
     stages{
         stage('Checkout'){
             steps{
@@ -45,5 +48,17 @@ pipeline{
                 sh 'mvn package'
             }
         }
+        stage('Docker build'){
+            steps{
+                sh """
+                rm -rf jenkins-docker
+                mkdir jenkins-docker
+                cd jenkins-docker/
+                cp /home/admin/agent/workspace/devops/target/addressbook.war .
+                sudo docker build -f /home/admin/agent/workspace/devops/dockerfile -t deploy:$BUILD_NUMBER
+                sudo docker run -itd -P deploy:$BUILD_NUMBER
+                """
+            }
+        }        
     }
 }
