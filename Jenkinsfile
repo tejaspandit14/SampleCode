@@ -69,6 +69,9 @@ pipeline{
             }
         }
         stage('Docker build Image'){
+            agent {
+                label 'docker'
+            }
             steps{
                 sh """
                 rm -rf jenkins-docker
