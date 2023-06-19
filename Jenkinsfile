@@ -58,7 +58,7 @@ pipeline{
                 sh """
                 rm -rf jenkins-docker
                 mkdir jenkins-docker
-                cp /home/admin/agent/workspace/devops/target/addressbook.war jenkins-docker/
+                cp /home/admin/agent/workspace/$JOB_NAME/target/addressbook.war jenkins-docker/
                 docker build -t deploy:$BUILD_NUMBER .
                 #docker run -itd -P deploy:$BUILD_NUMBER
                 docker tag deploy:$BUILD_NUMBER tejaspandit/addressbookbuild:$BUILD_NUMBER
