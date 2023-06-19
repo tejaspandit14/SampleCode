@@ -30,10 +30,10 @@ pipeline{
                 sh 'mvn test'
             }
         }
-        stage('MetricCheck'){
-            steps{
-                sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-            }
+        // stage('MetricCheck'){
+        //     steps{
+        //         sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+        //     }
             // post{
             //     always{
             //         cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
