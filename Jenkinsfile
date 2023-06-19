@@ -53,10 +53,10 @@ pipeline{
                 sh """
                 rm -rf jenkins-docker
                 mkdir jenkins-docker
-                cd jenkins-docker/
-                cp /home/admin/agent/workspace/devops/target/addressbook.war .
-                sudo docker build -t -f /home/admin/agent/workspace/devops/dockerfile deploy:$BUILD_NUMBER
-                sudo docker run -itd -P deploy:$BUILD_NUMBER
+                // cd jenkins-docker/
+                cp /home/admin/agent/workspace/devops/target/addressbook.war jenkins-docker/
+                docker build -t deploy:$BUILD_NUMBER .
+                docker run -itd -P deploy:$BUILD_NUMBER
                 """
             }
         }        
