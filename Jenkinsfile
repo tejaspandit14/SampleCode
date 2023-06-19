@@ -39,7 +39,7 @@ pipeline{
             //         cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
             //     }
             // }
-        }
+        // }
         stage('Package'){
             steps{
                 sh 'mvn package'
