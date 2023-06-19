@@ -74,7 +74,14 @@ pipeline{
                 docker rmi tejaspandit/addressbookbuild:$BUILD_NUMBER
                 """
 			}
-        }         
+        }
+        stage('K8 Deployment'){  
+        agent any
+        steps{
+            sh """
+            kubectl run addressbook --image=tejaspandit/addressbookbuild:$BUILD_NUMBER --port=8080
+            """
+        }           
     }
     post {
     always {
