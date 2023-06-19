@@ -96,6 +96,11 @@ pipeline{
                 """
 			}
         }
+        post {
+        always { 
+            sh 'docker logout'
+        }
+        }
         stage('K8 Deployment'){  
         agent {
                 label 'kubernetes'
@@ -107,12 +112,4 @@ pipeline{
         }           
     }
     }
-    post {
-    always {
-    agent {
-                label 'docker'
-            }    
-      sh 'docker logout'
-    }
-  }
 }
