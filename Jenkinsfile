@@ -55,7 +55,7 @@ pipeline{
                 mkdir jenkins-docker
                 cd jenkins-docker/
                 cp /home/admin/agent/workspace/devops/target/addressbook.war .
-                sudo docker build -f /home/admin/agent/workspace/devops/dockerfile -t deploy:$BUILD_NUMBER
+                sudo docker build -t -f /home/admin/agent/workspace/devops/dockerfile deploy:$BUILD_NUMBER
                 sudo docker run -itd -P deploy:$BUILD_NUMBER
                 """
             }
