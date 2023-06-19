@@ -97,7 +97,9 @@ pipeline{
 			}
         }
         stage('K8 Deployment'){  
-        agent any
+        agent {
+                label 'kubernetes'
+            }
         steps{
             sh """
             kubectl run addressbook --image=tejaspandit/addressbookbuild:$BUILD_NUMBER --port=8080
