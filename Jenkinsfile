@@ -53,7 +53,6 @@ pipeline{
                 sh """
                 rm -rf jenkins-docker
                 mkdir jenkins-docker
-                // cd jenkins-docker/
                 cp /home/admin/agent/workspace/devops/target/addressbook.war jenkins-docker/
                 docker build -t deploy:$BUILD_NUMBER .
                 docker run -itd -P deploy:$BUILD_NUMBER
