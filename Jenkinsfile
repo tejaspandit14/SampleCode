@@ -4,7 +4,7 @@ pipeline{
         maven 'mymaven'
     }
     // agent any
-    agents {
+    agent {
                 label 'docker'
             }
     stages{
