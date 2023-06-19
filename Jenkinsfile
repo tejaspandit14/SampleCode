@@ -4,26 +4,35 @@ pipeline{
         maven 'mymaven'
     }
     // agent any
-    agent {
-                label 'docker'
-            }
-
+    // agent {
+    //             label 'docker'
+    //         }
+    agent none
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
     stages{
         stage('Checkout'){
+            agent {
+                label 'docker'
+            }
             steps{
                 git 'https://github.com/tejaspandit14/SampleCode.git'
             }
         }
         stage('Compile'){
+            agent {
+                label 'docker'
+            }
             steps{
                 sh 'mvn compile'
             }
         }
         stage('CodeReview'){
+            agent {
+                label 'docker'
+            }
             steps{
                 sh 'mvn pmd:pmd'
             }
@@ -34,6 +43,9 @@ pipeline{
             // }
         }
         stage('UnitTest'){
+            agent {
+                label 'docker'
+            }
             steps{
                 sh 'mvn test'
             }
@@ -49,6 +61,9 @@ pipeline{
             // }
         // }
         stage('Package'){
+            agent {
+                label 'docker'
+            }
             steps{
                 sh 'mvn package'
             }
@@ -67,6 +82,9 @@ pipeline{
             }
         }
         stage('Docker Push image') {
+            agent {
+                label 'docker'
+            }
             steps {
 			    sh """
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
